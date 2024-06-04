@@ -4,8 +4,11 @@ import styled from "styled-components";
 import { useOnClickOutside } from "../../components/Hooks/useClickOutside";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { IoMdArrowForward } from "react-icons/io";
-import { IoReloadOutline } from "react-icons/io5";
+import { IoCloseSharp, IoReloadOutline } from "react-icons/io5";
 import resumeMudit from "../../assets/MuditRajputResume.pdf";
+import { Text } from "../../components/StartMenu";
+import { VscChromeMaximize } from "react-icons/vsc";
+import { FaRegWindowMinimize } from "react-icons/fa6";
 
 const AppContainer = styled.div`
   width: 100vw;
@@ -15,10 +18,17 @@ const AppContainer = styled.div`
   background-size: cover;
 `;
 
+const CenterContainer = styled.div`
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
 const ChromePage = () => {
   const ref: any = useRef();
   const navigate: any = useNavigate();
-  const [path, setPath] = useState<string>("https://google.com");
   const [search, setSearch] = useState<string>("https://google.com");
   useOnClickOutside(ref, () => {
     // setStartMenuOpen((prev) => !prev);
@@ -29,29 +39,32 @@ const ChromePage = () => {
       localStorage.getItem("path") === "resume"
         ? resumeMudit
         : localStorage.getItem("path");
-    setPath(path || "https://google.com");
     setSearch(path || "https://google.com");
   }, [localStorage.getItem("path")]);
 
+  const refInput: any = useRef();
+  refInput.current = document.getElementById("gsc-i-id1");
+  if (refInput.current) {
+    refInput.current.placeholder = "Search Google or type a URL";
+  }
+
   return (
-    <AppContainer
-      onKeyDown={(e: any) => {
-        if (e.keyCode === 13) {
-          if (path.includes("https://")) {
-            setSearch(path);
-          } else {
-            setSearch("https://" + path);
-          }
-        }
-      }}
-    >
+    <AppContainer>
       <div className="top-bar">
         <div className="tabs">
-          <div className="tab active">New Tab</div>
+          <div className="tab active">
+            {localStorage.getItem("path") === "resume"
+              ? "Resume Mudit Rajput"
+              : "New Tab"}
+          </div>
         </div>
         <div className="controls">
-          <button className="control-btn">_</button>
-          <button className="control-btn">[ ]</button>
+          <button className="control-btn">
+            <FaRegWindowMinimize />
+          </button>
+          <button className="control-btn">
+            <VscChromeMaximize />
+          </button>
           <button
             onClick={() => {
               navigate("/");
@@ -59,31 +72,40 @@ const ChromePage = () => {
             }}
             className="control-btn"
           >
-            X
+            <IoCloseSharp />
           </button>
         </div>
       </div>
-      <div className="search-container">
-        <IoMdArrowRoundBack />
-        <IoMdArrowForward />
-        <IoReloadOutline />
-        <input
-          type="text"
-          placeholder="Search Google or type a URL"
-          className="search-bar"
-          value={path}
-          onChange={(event: any) => {
-            setPath(event.target.value);
+      <div
+        style={{
+          display: localStorage.getItem("path") !== "resume" ? "flex" : "none",
+        }}
+        className="search-container"
+      >
+        <IoMdArrowRoundBack color="#6f6f6f" />
+        <IoMdArrowForward color="#6f6f6f" />  
+        <IoReloadOutline
+          cursor="pointer"
+          onClick={() => {
+            window.location.reload();
           }}
         />
+        <div className="gcse-search"></div>
       </div>
       <div>
-        <iframe
-          frameBorder="0"
-          src={search}
-          style={{ width: "100vw", height: "100vh" }}
-        />
-        {/* <div className="badge-base LI-profile-badge" data-locale="en_US" data-size="large" data-theme="dark" data-type="HORIZONTAL" data-vanity="mudit-rajput-0974a8198" data-version="v1"><a class="badge-base__link LI-simple-link" href="https://in.linkedin.com/in/mudit-rajput-0974a8198?trk=profile-badge">Mudit Rajput</a></div> */}
+        {localStorage.getItem("path") === "resume" ? (
+          <iframe
+            frameBorder="0"
+            src={search}
+            style={{ width: "100vw", height: "100vh" }}
+          />
+        ) : (
+          <CenterContainer>
+            <Text marginBottom="200px" fontSize="150px">
+              Google
+            </Text>
+          </CenterContainer>
+        )}
       </div>
     </AppContainer>
   );

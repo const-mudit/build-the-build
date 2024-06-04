@@ -4,7 +4,7 @@ import computerIcons from "../../assets/computer-icon.png";
 import PdfIcon from "../../assets/icons8-adobe-acrobat-reader-144.png";
 import binIcon from "../../assets/icons8-bin-windows-144.png";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const DesktopContainer = styled.div`
   width: 100%;
@@ -18,9 +18,8 @@ const DesktopContainer = styled.div`
   align-content: baseline;
 `;
 
-const DesktopIcon: any = styled.div`
+export const DesktopIcon: any = styled.div`
   width: 80px;
-  height: 80px;
   margin: 5px;
   padding: 5px;
   display: flex;
@@ -42,15 +41,21 @@ const IconImage = styled.img`
   height: 50px;
 `;
 
-const IconLabel = styled.div`
+export const IconLabel = styled.div`
   margin-top: 5px;
   color: white;
+  font-size: 12px;
   text-align: center;
 `;
 
 const Desktop = () => {
   const navigate = useNavigate();
   const [selected, setSelected] = useState("");
+
+  useEffect(() => {
+    localStorage.removeItem("path");
+  }, [])
+
   const handleClick = (name: string, route: string) => {
     if (selected === name) {
       navigate(route);

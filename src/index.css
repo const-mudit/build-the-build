@@ -13,6 +13,71 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.gsc-control-cse {
+  width: 65vw !important;
+  background-color: transparent !important;
+  border: none !important;
+}
+
+.gsc-input-box {
+  border: none !important;
+  background-color: #6f6f6f !important;
+  border-radius: 30px;
+}
+
+.gsc-completion-container {
+  background: #6f6f6f9c !important;
+  border-radius: 30px !important;
+  overflow: hidden !important;
+  border: none !important
+}
+
+.gstl_50 {
+  border-radius: 30px !important;
+  overflow: hidden !important;
+}
+
+.gssb_a {
+  padding: 10px 15px !important;
+}
+
+.gssb_a:hover {
+  background: #6f6f6f;
+}
+
+.gsc-search-button{
+  border-radius: 30px !important;
+}
+
+.gsc-input {
+  background: #6f6f6f !important;
+  border-radius: 30px;
+  padding-left: 5px !important;
+}
+
+.gsc-input::placeholder {
+  color: #efefef !important;
+  font-weight: bold;
+}
+
+.gsc-results-wrapper-overlay {
+  top: 110px !important;
+  height: 70% !important;
+}
+
+.gsc-modal-background-image-visible {
+  opacity: 0 !important;
+}
+
+.hoverHighlight {
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+.hoverHighlight:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
 a {
   font-weight: 500;
   color: #646cff;

@@ -38,13 +38,14 @@ const StartMenuItemsContainer: any = styled.div`
   align-items: ${(props: any) => props.alignItems};
   flex-direction: ${(props: any) => props.flexDirection};
 `;
-const FlexBox: any = styled.div`
+export const FlexBox: any = styled.div`
   height: ${(props: any) => props.height};
   width: ${(props: any) => props.width};
   display: ${(props: any) => props.display};
   background: ${(props: any) => props.background};
   justify-content: ${(props: any) => props.justifyContent};
   align-items: ${(props: any) => props.alignItems};
+  align-content: ${(props: any) => props.alignContent};
   gap: ${(props: any) => props.gap};
   flex-wrap: ${(props: any) => props.flexWrap};
   padding: ${(props: any) => props.padding};
@@ -55,7 +56,7 @@ const IconImage = styled.img`
   height: 50px;
 `;
 
-const Text: any = styled.p`
+export const Text: any = styled.p`
   height: ${(props: any) => props.height};
   width: ${(props: any) => props.width};
   display: ${(props: any) => props.display};
@@ -66,6 +67,7 @@ const Text: any = styled.p`
   flex-wrap: ${(props: any) => props.flexWrap};
   font-weight: ${(props: any) => props.fontWeight};
   font-size: ${(props: any) => props.fontSize};
+  margin-bottom: ${(props: any) => props.marginBottom};
 `;
 
 const StartMenuIcon = styled.div`

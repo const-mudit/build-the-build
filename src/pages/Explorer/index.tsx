@@ -2,12 +2,38 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { IoMdArrowForward } from "react-icons/io";
-import { IoReloadOutline } from "react-icons/io5";
+import { IoCloseSharp, IoReloadOutline } from "react-icons/io5";
 import { RiComputerLine } from "react-icons/ri";
 import computerIcons from "../../assets/computer-icon.png";
 import binIcon from "../../assets/icons8-bin-windows-144.png";
 import discIcon from "../../assets/icons8-hard-drive-96.png";
 import desktopIcon from "../../assets/icons8-desktop-96.png";
+import { VscChromeMaximize } from "react-icons/vsc";
+import {
+  FaAngleDown,
+  FaAngleRight,
+  FaRegWindowMinimize,
+} from "react-icons/fa6";
+import { useState } from "react";
+import { FlexBox, Text } from "../../components/StartMenu";
+import { DesktopIcon, IconLabel } from "../../components/Desktop";
+import apollo from "../../assets/icons8-apollo-96.png";
+import bitbucket from "../../assets/icons8-bitbucket-96.png";
+import clickup from "../../assets/icons8-clickup-100.png";
+import cssIcon from "../../assets/icons8-css-64.png";
+import express from "../../assets/icons8-express-js-96.png";
+import github from "../../assets/icons8-github-100.png";
+import graphql from "../../assets/icons8-graphql-96.png";
+import htmlIcon from "../../assets/icons8-html-tag-64.png";
+import javascript from "../../assets/icons8-javascript-96.png";
+import jira from "../../assets/icons8-jira-96.png";
+import mongo from "../../assets/icons8-mongo-db-96.png";
+import node from "../../assets/icons8-node-js-96.png";
+import reactIcon from "../../assets/icons8-react-64.png";
+import reduxIcon from "../../assets/icons8-redux-96.png";
+import swagger from "../../assets/icons8-swagger-96.png";
+import typescriptIcon from "../../assets/icons8-typescript-96.png";
+import photosIcon from "../../assets/icons8-photos-96.png";
 
 const AppContainer = styled.div`
   width: 100vw;
@@ -23,8 +49,105 @@ const IconImage = styled.img`
   margin-right: 10px;
 `;
 
+const IconImageBig = styled.img`
+  width: 50px;
+  height: 50px;
+`;
+
+const DiscImage = styled.img`
+  width: 60px;
+  height: 60px;
+  margin-right: 10px;
+`;
+
+const Skills = [
+  {
+    name: "HTML",
+    icon: htmlIcon,
+  },
+  {
+    name: "CSS",
+    icon: cssIcon,
+  },
+  {
+    name: "Javascript",
+    icon: javascript,
+  },
+  {
+    name: "Typescript",
+    icon: typescriptIcon,
+  },
+  {
+    name: "React js",
+    icon: reactIcon,
+  },
+  {
+    name: "Redux Tool Kit",
+    icon: reduxIcon,
+  },
+  {
+    name: "Apollo Client",
+    icon: apollo,
+  },
+  {
+    name: "Graphql",
+    icon: graphql,
+  },
+  {
+    name: "Apollo Server",
+    icon: apollo,
+  },
+  {
+    name: "Node js",
+    icon: node,
+  },
+  {
+    name: "Express",
+    icon: express,
+  },
+  {
+    name: "Mongo DB",
+    icon: mongo,
+  },
+  {
+    name: "Github",
+    icon: github,
+  },
+  {
+    name: "Bitbucket",
+    icon: bitbucket,
+  },
+  {
+    name: "Jira",
+    icon: jira,
+  },
+  {
+    name: "Click up",
+    icon: clickup,
+  },
+  {
+    name: "Swagger-API-Documentation",
+    icon: swagger,
+  },
+];
+const achievements = [
+  {
+    name: "Received a reward and recognition for Blitzkrieg Frontend Pioneer at Zopper in march 2024.",
+    icon: photosIcon,
+  },
+  {
+    name: "Got Reward and Recognition for a great beginning at work.",
+    icon: photosIcon,
+  },
+  {
+    name: "Winner at Product Launch event at Galgotias University.",
+    icon: photosIcon,
+  },
+];
+
 const Explorer = () => {
   const navigate: any = useNavigate();
+  const [selected, setSelected] = useState("pc");
 
   return (
     <AppContainer>
@@ -33,8 +156,12 @@ const Explorer = () => {
           <div className="tab active">This PC</div>
         </div>
         <div className="controls">
-          <button className="control-btn">_</button>
-          <button className="control-btn">[ ]</button>
+          <button className="control-btn">
+            <FaRegWindowMinimize />
+          </button>
+          <button className="control-btn">
+            <VscChromeMaximize />
+          </button>
           <button
             onClick={() => {
               navigate("/");
@@ -42,7 +169,7 @@ const Explorer = () => {
             }}
             className="control-btn"
           >
-            X
+            <IoCloseSharp />
           </button>
         </div>
       </div>
@@ -67,6 +194,7 @@ const Explorer = () => {
           <p>{" >"}</p>
           <p>This PC</p>
           <p>{">"}</p>
+          <p>{selected !== "pc" && selected}</p>
         </div>
       </div>
       <div
@@ -82,14 +210,26 @@ const Explorer = () => {
             gap: "10px",
           }}
         >
-          <p style={{
-            padding: " 5px 15px",
-          }}>
+          <br />
+          <p
+            onClick={() => {
+              navigate("/");
+            }}
+            style={{
+              padding: "5px 15px",
+            }}
+          >
             <IconImage src={desktopIcon} />
-            Desktop</p>
-          <p style={{
-            padding: " 5px 15px",
-          }}>
+            Desktop
+          </p>
+          <p
+            onClick={() => {
+              navigate("/recycle");
+            }}
+            style={{
+              padding: " 5px 15px",
+            }}
+          >
             <IconImage src={binIcon} />
             Recycle Bin
           </p>
@@ -98,24 +238,49 @@ const Explorer = () => {
               borderColor: "#9f9f9f",
             }}
           />
-          <p style={{
-            background: '#5f5f5f',
-            padding: " 5px 15px",
-          }}>
+          <p
+            onClick={() => {
+              setSelected("pc");
+            }}
+            style={{
+              background: selected === "pc" ? "#5f5f5f" : "",
+              padding: "5px 15px",
+              cursor: "pointer",
+            }}
+          >
+            <FaAngleDown />
             <IconImage src={computerIcons} />
             This PC
           </p>
-          <p style={{
-            padding: " 5px 15px",
-          }}>
+          <p
+            onClick={() => {
+              setSelected("C");
+            }}
+            style={{
+              background: selected === "C" ? "#5f5f5f" : "",
+              padding: "5px 15px",
+              cursor: "pointer",
+              marginLeft: "10px",
+            }}
+          >
+            <FaAngleRight />
             <IconImage src={discIcon} />
-            New Volume (C:)
+            Skills (C:)
           </p>
-          <p style={{
-            padding: " 5px 15px",
-          }}>
+          <p
+            onClick={() => {
+              setSelected("D");
+            }}
+            style={{
+              background: selected === "D" ? "#5f5f5f" : "",
+              padding: "5px 15px",
+              cursor: "pointer",
+              marginLeft: "10px",
+            }}
+          >
+            <FaAngleRight />
             <IconImage src={discIcon} />
-            New Volume (D:)
+            Achievements (D:)
           </p>
         </div>
         <hr
@@ -123,7 +288,239 @@ const Explorer = () => {
             borderColor: "#9f9f9f",
           }}
         />
-        <div></div>
+        {selected === "pc" && (
+          <div
+            style={{
+              padding: "30px 0px 0px 30px",
+              width: "82%",
+            }}
+          >
+            <FlexBox
+              gap="10px"
+              padding="10px 0px"
+              alignItems="center"
+              display="flex"
+            >
+              <Text
+                style={{
+                  whiteSpace: "noWrap",
+                }}
+                fontSize="12px"
+              >
+                Devices and Drivers
+              </Text>
+              <div
+                style={{
+                  width: "100%",
+                  color: "#6f6f6f",
+                }}
+              >
+                <hr />
+              </div>
+            </FlexBox>
+            <FlexBox display="flex">
+              <FlexBox height="40px" width="300px">
+                <div
+                  onClick={() => {
+                    setSelected("C");
+                  }}
+                  style={{
+                    padding: "10px 20px",
+                    borderRadius: "10px",
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <DiscImage src={discIcon} />
+                  <div>
+                    <Text fontSize="11px">Skills (C:)</Text>
+                    <div
+                      style={{
+                        width: "190px",
+                        display: "flex",
+                        height: "15px",
+                        borderRadius: "2px",
+                        overflow: "hidden",
+                      }}
+                    >
+                      <div
+                        style={{
+                          background: "blue",
+                          width: "46%",
+                        }}
+                      ></div>
+                      <div
+                        style={{
+                          background: "grey",
+                          width: "54%",
+                        }}
+                      ></div>
+                    </div>
+                    <Text fontSize="11px">54 GB free of 100 GB</Text>
+                  </div>
+                </div>
+              </FlexBox>
+              <FlexBox height="40px" width="300px">
+                <div
+                  onClick={() => {
+                    setSelected("D");
+                  }}
+                  style={{
+                    padding: "10px 20px",
+                    borderRadius: "10px",
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                  }}
+                >
+                  <DiscImage src={discIcon} />
+                  <div>
+                    <Text fontSize="11px">Achievements (D:)</Text>
+                    <div
+                      style={{
+                        width: "190px",
+                        display: "flex",
+                        height: "15px",
+                        borderRadius: "2px",
+                        overflow: "hidden",
+                      }}
+                    >
+                      <div
+                        style={{
+                          background: "blue",
+                          width: "65%",
+                        }}
+                      ></div>
+                      <div
+                        style={{
+                          background: "grey",
+                          width: "35%",
+                        }}
+                      ></div>
+                    </div>
+                    <Text fontSize="11px">35 GB free of 100 GB</Text>
+                  </div>
+                </div>
+              </FlexBox>
+            </FlexBox>
+          </div>
+        )}
+        {selected === "C" && (
+          <div
+            style={{
+              padding: "30px 0px 0px 30px",
+              width: "82%",
+            }}
+          >
+            <FlexBox
+              gap="10px"
+              padding="10px 0px"
+              alignItems="center"
+              display="flex"
+            >
+              <Text
+                style={{
+                  whiteSpace: "noWrap",
+                }}
+                fontSize="12px"
+              >
+                Skills
+              </Text>
+              <div
+                style={{
+                  width: "100%",
+                  color: "#6f6f6f",
+                }}
+              >
+                <hr />
+              </div>
+            </FlexBox>
+            <FlexBox
+              gap="15px"
+              style={{
+                padding: "30px 0px 0px 30px",
+                width: "95%",
+              }}
+              flexWrap="wrap"
+              alignContent="baseline"
+              display="flex"
+            >
+              {Skills.map(({ name, icon }) => (
+                <DesktopIcon key={name}>
+                  <IconImageBig src={icon} />
+                  <IconLabel>{name}</IconLabel>
+                </DesktopIcon>
+              ))}
+            </FlexBox>
+          </div>
+        )}
+        {selected === "D" && (
+          <div
+            style={{
+              padding: "30px 0px 0px 30px",
+              width: "82%",
+            }}
+          >
+            <FlexBox
+              gap="10px"
+              padding="10px 0px"
+              alignItems="center"
+              display="flex"
+            >
+              <Text
+                style={{
+                  whiteSpace: "noWrap",
+                }}
+                fontSize="12px"
+              >
+                Achievements
+              </Text>
+              <div
+                style={{
+                  width: "100%",
+                  color: "#6f6f6f",
+                }}
+              >
+                <hr />
+              </div>
+            </FlexBox>
+            <FlexBox
+              gap="15px"
+              style={{
+                padding: "30px 0px 0px 30px",
+                width: "95%",
+              }}
+              flexWrap="wrap"
+              alignContent="baseline"
+              display="flex"
+            >
+              {achievements.map(({ name, icon }) => (
+                <FlexBox
+                  className="hoverHighlight"
+                  justifyContent="space-between"
+                  width="70%"
+                  alignItems="center"
+                  display="flex"
+                  key={name}
+                >
+                  <FlexBox display="flex" alignItems="center">
+                    <IconImage src={icon} />
+                    <Text fontSize="13px">{name}</Text>
+                  </FlexBox>
+                  <p
+                    style={{
+                      marginLeft: "100px",
+                      fontSize: "12px",
+                    }}
+                  >
+                    Image/Jpg
+                  </p>
+                </FlexBox>
+              ))}
+            </FlexBox>
+          </div>
+        )}
       </div>
     </AppContainer>
   );
