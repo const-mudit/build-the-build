@@ -1,0 +1,1 @@
+declare module "/Users/mudit/Documents/Mudit/build-the-build/node_modules/@types/react-dom/client"
