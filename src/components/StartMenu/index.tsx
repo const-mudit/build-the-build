@@ -49,6 +49,8 @@ export const FlexBox: any = styled.div`
   gap: ${(props: any) => props.gap};
   flex-wrap: ${(props: any) => props.flexWrap};
   padding: ${(props: any) => props.padding};
+  border-radius: ${(props: any) => props.borderRadius};
+  border-left: ${(props: any) => props.borderLeft};
 `;
 
 const IconImage = styled.img`
@@ -68,6 +70,7 @@ export const Text: any = styled.p`
   font-weight: ${(props: any) => props.fontWeight};
   font-size: ${(props: any) => props.fontSize};
   margin-bottom: ${(props: any) => props.marginBottom};
+  margin: ${(props: any) => props.margin};
 `;
 
 const StartMenuIcon = styled.div`
@@ -79,6 +82,10 @@ const StartMenuIcon = styled.div`
   height: 70px;
   font-size: 10px;
 `;
+
+const handleMailClick = () => {
+  window.open("mailto:muditrajput1@gmail.com?subject=I am awesome");
+};
 
 const StartMenu = () => {
   const navigate = useNavigate();
@@ -98,7 +105,7 @@ const StartMenu = () => {
           display="flex"
           flexWrap="wrap"
         >
-          <StartMenuIcon>
+          <StartMenuIcon onClick={handleMailClick}>
             <IconImage src={mailIcon} />
             <Text>Mail</Text>
           </StartMenuIcon>
@@ -140,7 +147,11 @@ const StartMenu = () => {
           display="flex"
           flexWrap="wrap"
         >
-          <StartMenuIcon>
+          <StartMenuIcon
+            onClick={() => {
+              navigate("/theme");
+            }}
+          >
             <IconImage src={settingIcon} />
             <Text>Settings</Text>
           </StartMenuIcon>

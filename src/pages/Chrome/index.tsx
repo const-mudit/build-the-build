@@ -10,7 +10,7 @@ import { Text } from "../../components/StartMenu";
 import { VscChromeMaximize } from "react-icons/vsc";
 import { FaRegWindowMinimize } from "react-icons/fa6";
 
-const AppContainer = styled.div`
+export const AppContainer = styled.div`
   width: 100vw;
   height: 100vh;
   background: linear-gradient(0deg, black, #0e0321);

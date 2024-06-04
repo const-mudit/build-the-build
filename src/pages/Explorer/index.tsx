@@ -346,7 +346,7 @@ const Explorer = () => {
                     >
                       <div
                         style={{
-                          background: "blue",
+                          background: "#43b8ea",
                           width: "46%",
                         }}
                       ></div>
@@ -388,7 +388,7 @@ const Explorer = () => {
                     >
                       <div
                         style={{
-                          background: "blue",
+                          background: "#43b8ea",
                           width: "65%",
                         }}
                       ></div>
