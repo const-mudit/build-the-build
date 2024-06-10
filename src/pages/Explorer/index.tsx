@@ -34,6 +34,7 @@ import reduxIcon from "../../assets/icons8-redux-96.png";
 import swagger from "../../assets/icons8-swagger-96.png";
 import typescriptIcon from "../../assets/icons8-typescript-96.png";
 import photosIcon from "../../assets/icons8-photos-96.png";
+import { StartwithMenu } from "../Desktop";
 
 const AppContainer = styled.div`
   width: 100vw;
@@ -522,6 +523,7 @@ const Explorer = () => {
           </div>
         )}
       </div>
+      <StartwithMenu />
     </AppContainer>
   );
 };

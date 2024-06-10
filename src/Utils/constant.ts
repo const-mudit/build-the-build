@@ -7,14 +7,14 @@ import wallpaper6 from "../assets/windows-11-6.jpg";
 
 
 export const wallpapers: any = [
+    wallpaper6,
     wallpaper1,
     wallpaper2,
     wallpaper3,
     wallpaper4,
     wallpaper5,
-    wallpaper6
 ]
 
 export const colors: any = [
-    '#005657', '#004eb1', '#351f45', '#8c1272', '#872f12', '#ff0000'
+    '#0491cb', '#005657', '#004eb1', '#351f45', '#8c1272', '#872f12', '#ff0000'
 ]

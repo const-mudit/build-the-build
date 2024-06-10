@@ -8,6 +8,7 @@ import themeIcons from "../../assets/icons8-brush-96.png";
 import { colors, wallpapers } from "../../Utils/constant.js";
 import { useContext } from "react";
 import { configContext } from "../../App";
+import { StartwithMenu } from "../Desktop";
 
 const Theme = () => {
   const navigate = useNavigate();
@@ -115,6 +116,7 @@ const Theme = () => {
           </FlexBox>
         </FlexBox>
       </FlexBox>
+      <StartwithMenu />
     </AppContainer>
   );
 };

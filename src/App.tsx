@@ -4,7 +4,7 @@ import ChromePage from "./pages/Chrome";
 import Explorer from "./pages/Explorer";
 import Theme from "./pages/Theme";
 import { createContext, useState } from "react";
-import wallpaper1 from "./assets/windows-11-1.png";
+import wallpaper6 from "./assets/windows-11-6.jpg";
 
 export const configContext = createContext<any>(null);
 
@@ -12,7 +12,7 @@ const ConfigProvider = configContext.Provider;
 
 const App: React.FC = () => {
   const [config, setConfig] = useState({
-    wall: wallpaper1,
+    wall: wallpaper6,
     color: "#0491cb",
   });
 

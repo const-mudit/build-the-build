@@ -9,6 +9,7 @@ import resumeMudit from "../../assets/MuditRajputResume.pdf";
 import { Text } from "../../components/StartMenu";
 import { VscChromeMaximize } from "react-icons/vsc";
 import { FaRegWindowMinimize } from "react-icons/fa6";
+import { StartwithMenu } from "../Desktop";
 
 export const AppContainer = styled.div`
   width: 100vw;
@@ -107,6 +108,7 @@ const ChromePage = () => {
           </CenterContainer>
         )}
       </div>
+      <StartwithMenu />
     </AppContainer>
   );
 };

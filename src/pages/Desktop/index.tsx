@@ -6,15 +6,27 @@ import styled from "styled-components";
 import { useOnClickOutside } from "../../components/Hooks/useClickOutside";
 import { configContext } from "../../App";
 
-
-const DesktopPage = () => {
+export const StartwithMenu = () => {
   const [startMenuOpen, setStartMenuOpen] = useState(false);
-  const { config } = useContext(configContext)
-  
   const ref: any = useRef();
   useOnClickOutside(ref, () => {
     setStartMenuOpen((prev) => !prev);
   });
+  return (
+    <>
+      <Taskbar setStartMenuOpen={setStartMenuOpen} />
+      {startMenuOpen && (
+        <div ref={ref}>
+          <StartMenu />
+        </div>
+      )}
+    </>
+  );
+};
+
+const DesktopPage = () => {
+  const { config } = useContext(configContext);
+
   const AppContainer = styled.div`
     width: 100vw;
     height: 100vh;
@@ -26,15 +38,9 @@ const DesktopPage = () => {
   return (
     <AppContainer>
       <Desktop />
-      <Taskbar setStartMenuOpen={setStartMenuOpen} />
-      {startMenuOpen && (
-        <div ref={ref}>
-          <StartMenu />
-        </div>
-      )}
+      <StartwithMenu />
     </AppContainer>
   );
-}
-
+};
 
 export default DesktopPage;
