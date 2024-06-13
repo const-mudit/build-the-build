@@ -4,7 +4,8 @@ import wallpaper3 from "../assets/wallpaper3.jpeg";
 import wallpaper4 from "../assets/windows-11-4.jpg";
 import wallpaper5 from "../assets/windows-11-5.jpg";
 import wallpaper6 from "../assets/windows-11-6.jpg";
-
+import randr1 from '../assets/RandRS.jpeg';
+import randr2 from '../assets/FrontendRandR.jpg';
 
 export const wallpapers: any = [
     wallpaper6,
@@ -13,6 +14,11 @@ export const wallpapers: any = [
     wallpaper3,
     wallpaper4,
     wallpaper5,
+]
+
+export const rewardsAndRecognitions: any = [
+    randr2,
+    randr1
 ]
 
 export const colors: any = [

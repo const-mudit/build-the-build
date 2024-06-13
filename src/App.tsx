@@ -5,6 +5,7 @@ import Explorer from "./pages/Explorer";
 import Theme from "./pages/Theme";
 import { createContext, useState } from "react";
 import wallpaper6 from "./assets/windows-11-6.jpg";
+import Recycle from "./pages/Recycle";
 
 export const configContext = createContext<any>(null);
 
@@ -14,6 +15,7 @@ const App: React.FC = () => {
   const [config, setConfig] = useState({
     wall: wallpaper6,
     color: "#0491cb",
+    deletedRewards: []
   });
 
   return (
@@ -29,6 +31,7 @@ const App: React.FC = () => {
           <Route path="/chrome" element={<ChromePage />} />
           <Route path="/explorer" element={<Explorer />} />
           <Route path="/theme" element={<Theme />} />
+          <Route path="/recycle" element={<Recycle />} />
         </Routes>
       </Router>
     </ConfigProvider>

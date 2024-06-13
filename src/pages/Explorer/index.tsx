@@ -4,6 +4,7 @@ import { IoMdArrowRoundBack } from "react-icons/io";
 import { IoMdArrowForward } from "react-icons/io";
 import { IoCloseSharp, IoReloadOutline } from "react-icons/io5";
 import { RiComputerLine } from "react-icons/ri";
+import { MdDelete } from "react-icons/md";
 import computerIcons from "../../assets/computer-icon.png";
 import binIcon from "../../assets/icons8-bin-windows-144.png";
 import discIcon from "../../assets/icons8-hard-drive-96.png";
@@ -14,7 +15,7 @@ import {
   FaAngleRight,
   FaRegWindowMinimize,
 } from "react-icons/fa6";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { FlexBox, Text } from "../../components/StartMenu";
 import { DesktopIcon, IconLabel } from "../../components/Desktop";
 import apollo from "../../assets/icons8-apollo-96.png";
@@ -35,6 +36,9 @@ import swagger from "../../assets/icons8-swagger-96.png";
 import typescriptIcon from "../../assets/icons8-typescript-96.png";
 import photosIcon from "../../assets/icons8-photos-96.png";
 import { StartwithMenu } from "../Desktop";
+import { configContext } from "../../App";
+import Modal from "../../components/Modal";
+import { rewardsAndRecognitions } from "../../Utils/constant";
 
 const AppContainer = styled.div`
   width: 100vw;
@@ -131,24 +135,40 @@ const Skills = [
     icon: swagger,
   },
 ];
-const achievements = [
+export const achievements = [
   {
     name: "Received a reward and recognition for Blitzkrieg Frontend Pioneer at Zopper in march 2024.",
     icon: photosIcon,
+    id: 0,
   },
   {
     name: "Got Reward and Recognition for a great beginning at work.",
     icon: photosIcon,
+    id: 1,
   },
   {
     name: "Winner at Product Launch event at Galgotias University.",
     icon: photosIcon,
+    id: 2,
   },
 ];
 
 const Explorer = () => {
   const navigate: any = useNavigate();
   const [selected, setSelected] = useState("pc");
+  const [selectedReward, setSelectedReward] = useState(null);
+  const [open, setOpen] = useState(false);
+
+  const { config, setConfig } = useContext(configContext);
+
+  const { deletedRewards } = config;
+
+  const handleClickRewards = (id: any) => {
+    if (id === selectedReward) {
+      setOpen(true);
+    }
+    setSelectedReward(id);
+  };
 
   return (
     <AppContainer>
@@ -175,8 +195,8 @@ const Explorer = () => {
         </div>
       </div>
       <div className="search-container">
-        <IoMdArrowRoundBack />
-        <IoMdArrowForward />
+        <IoMdArrowRoundBack onClick={() => navigate(-1)} />
+        <IoMdArrowForward onClick={() => navigate(1)} />
         <IoReloadOutline />
         <div
           style={{
@@ -196,6 +216,20 @@ const Explorer = () => {
           <p>This PC</p>
           <p>{">"}</p>
           <p>{selected !== "pc" && selected}</p>
+        </div>
+        <div>
+          {selectedReward !== null && (
+            <MdDelete
+              onClick={() => {
+                setConfig({
+                  ...config,
+                  deletedRewards: [...deletedRewards, selectedReward],
+                });
+                setSelectedReward(null);
+              }}
+              fontSize="25px"
+            />
+          )}
         </div>
       </div>
       <div
@@ -242,6 +276,7 @@ const Explorer = () => {
           <p
             onClick={() => {
               setSelected("pc");
+              setSelectedReward(null);
             }}
             style={{
               background: selected === "pc" ? "#5f5f5f" : "",
@@ -256,6 +291,7 @@ const Explorer = () => {
           <p
             onClick={() => {
               setSelected("C");
+              setSelectedReward(null);
             }}
             style={{
               background: selected === "C" ? "#5f5f5f" : "",
@@ -324,6 +360,7 @@ const Explorer = () => {
                 <div
                   onClick={() => {
                     setSelected("C");
+                    setSelectedReward(null);
                   }}
                   style={{
                     padding: "10px 20px",
@@ -496,34 +533,51 @@ const Explorer = () => {
               alignContent="baseline"
               display="flex"
             >
-              {achievements.map(({ name, icon }) => (
-                <FlexBox
-                  className="hoverHighlight"
-                  justifyContent="space-between"
-                  width="70%"
-                  alignItems="center"
-                  display="flex"
-                  key={name}
-                >
-                  <FlexBox display="flex" alignItems="center">
-                    <IconImage src={icon} />
-                    <Text fontSize="13px">{name}</Text>
-                  </FlexBox>
-                  <p
-                    style={{
-                      marginLeft: "100px",
-                      fontSize: "12px",
+              {achievements.map(({ name, icon, id }) =>
+                deletedRewards.includes(id) ? (
+                  ""
+                ) : (
+                  <FlexBox
+                    className={`hoverHighlight ${selectedReward === id ? "selected" : ""}`}
+                    justifyContent="space-between"
+                    width="70%"
+                    alignItems="center"
+                    display="flex"
+                    key={name}
+                    onClick={() => {
+                      handleClickRewards(id);
                     }}
                   >
-                    Image/Jpg
-                  </p>
-                </FlexBox>
-              ))}
+                    <FlexBox display="flex" alignItems="center">
+                      <IconImage src={icon} />
+                      <Text fontSize="13px">{name}</Text>
+                    </FlexBox>
+                    <p
+                      style={{
+                        marginLeft: "100px",
+                        fontSize: "12px",
+                      }}
+                    >
+                      Image/Jpg
+                    </p>
+                  </FlexBox>
+                )
+              )}
             </FlexBox>
           </div>
         )}
       </div>
       <StartwithMenu />
+      <Modal
+        isOpen={open}
+        onClose={() => {
+          setOpen(false);
+          setSelectedReward(null);
+        }}
+        imageSrc={
+          selectedReward !== null ? rewardsAndRecognitions[selectedReward] : ""
+        }
+      />
     </AppContainer>
   );
 };

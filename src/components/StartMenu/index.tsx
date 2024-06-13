@@ -125,7 +125,11 @@ const StartMenu = () => {
             <IconImage src={calendarIcon} />
             <Text>Calendar</Text>
           </StartMenuIcon>
-          <StartMenuIcon>
+          <StartMenuIcon
+            onClick={() => {
+              navigate("/explorer");
+            }}
+          >
             <IconImage src={explorerIcon} />
             <Text>Explorer</Text>
           </StartMenuIcon>
