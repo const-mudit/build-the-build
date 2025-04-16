@@ -8,7 +8,7 @@ import { configContext } from "../../App";
 
 export const StartwithMenu = () => {
   const [startMenuOpen, setStartMenuOpen] = useState(false);
-  const ref: any = useRef();
+  const ref = useRef<HTMLDivElement>(null);
   useOnClickOutside(ref, () => {
     setStartMenuOpen((prev) => !prev);
   });
@@ -25,7 +25,11 @@ export const StartwithMenu = () => {
 };
 
 const DesktopPage = () => {
-  const { config } = useContext(configContext);
+  const context = useContext(configContext);
+  if (!context) {
+    throw new Error("configContext is null. Please ensure it is properly initialized.");
+  }
+  const { config } = context;
 
   const AppContainer = styled.div`
     height: 100vh;

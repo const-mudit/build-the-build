@@ -1,4 +1,5 @@
-import { useNavigate } from "react-router-dom";
+/* eslint-disable react-refresh/only-export-components */
+import { NavigateFunction, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { IoMdArrowForward } from "react-icons/io";
@@ -154,16 +155,20 @@ export const achievements = [
 ];
 
 const Explorer = () => {
-  const navigate: any = useNavigate();
+  const navigate: NavigateFunction = useNavigate();
   const [selected, setSelected] = useState("pc");
-  const [selectedReward, setSelectedReward] = useState(null);
+  const [selectedReward, setSelectedReward] = useState<number | null>(null);
   const [open, setOpen] = useState(false);
 
-  const { config, setConfig } = useContext(configContext);
+  const context = useContext(configContext);
+  if (!context) {
+    throw new Error("configContext must be used within a ConfigProvider");
+  }
+  const { config, setConfig } = context;
 
   const { deletedRewards } = config;
 
-  const handleClickRewards = (id: any) => {
+  const handleClickRewards = (id: number) => {
     if (id === selectedReward) {
       setOpen(true);
     }
@@ -223,7 +228,7 @@ const Explorer = () => {
               onClick={() => {
                 setConfig({
                   ...config,
-                  deletedRewards: [...deletedRewards, selectedReward],
+                  deletedRewards: [...deletedRewards, { id: selectedReward.toString(), name: "Reward Name" }],
                 });
                 setSelectedReward(null);
               }}
@@ -534,7 +539,7 @@ const Explorer = () => {
               display="flex"
             >
               {achievements.map(({ name, icon, id }) =>
-                deletedRewards.includes(id) ? (
+                deletedRewards.some((reward) => reward.id === id.toString()) ? (
                   ""
                 ) : (
                   <FlexBox

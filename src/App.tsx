@@ -7,12 +7,29 @@ import { createContext, useState } from "react";
 import wallpaper6 from "./assets/windows-11-6.jpg";
 import Recycle from "./pages/Recycle";
 
-export const configContext = createContext<any>(null);
+interface ConfigContextType {
+  config: {
+    wall: string;
+    color: string;
+    deletedRewards: { id: string; name: string }[];
+  };
+  setConfig: React.Dispatch<React.SetStateAction<{
+    wall: string;
+    color: string;
+    deletedRewards: { id: string; name: string }[];
+  }>>;
+}
+
+export const configContext = createContext<ConfigContextType | null>(null);
 
 const ConfigProvider = configContext.Provider;
 
 const App: React.FC = () => {
-  const [config, setConfig] = useState({
+  const [config, setConfig] = useState<{
+    wall: string;
+    color: string;
+    deletedRewards: { id: string; name: string }[];
+  }>({
     wall: wallpaper6,
     color: "#0491cb",
     deletedRewards: []

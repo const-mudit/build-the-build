@@ -30,10 +30,16 @@ const IconImage = styled.img`
 `;
 
 const Recycle = () => {
-  const navigate: any = useNavigate();
+  const navigate: ReturnType<typeof useNavigate> = useNavigate();
   const [selected] = useState("bin");
 
-  const { config, setConfig } = useContext(configContext);
+  const context = useContext(configContext);
+
+  if (!context) {
+    throw new Error("configContext is null. Ensure the provider is set.");
+  }
+
+  const { config, setConfig } = context;
   const { deletedRewards } = config;
 
   return (
@@ -201,7 +207,7 @@ const Recycle = () => {
               display="flex"
             >
               {achievements.map(({ name, icon, id }) =>
-                !deletedRewards.includes(id) ? (
+                !deletedRewards.some((reward) => reward.id === id.toString()) ? (
                   ""
                 ) : (
                   <FlexBox

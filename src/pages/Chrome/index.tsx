@@ -1,4 +1,19 @@
 import { useEffect, useRef, useState } from "react";
+
+// Extend the Window interface to include the google property
+declare global {
+  interface Window {
+    google?: {
+      search?: {
+        cse?: {
+          element: {
+            render: (options: { div: string; tag: string }) => void;
+          };
+        };
+      };
+    };
+  }
+}
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { useOnClickOutside } from "../../components/Hooks/useClickOutside";
@@ -28,23 +43,60 @@ const CenterContainer = styled.div`
 `;
 
 const ChromePage = () => {
-  const ref: any = useRef();
-  const navigate: any = useNavigate();
+  const ref = useRef<HTMLDivElement | null>(null);
+  const navigate = useNavigate();
   const [search, setSearch] = useState<string>("https://google.com");
+  const [isSearchInitialized, setIsSearchInitialized] = useState(false);
+  const [path, setPath] = useState<string | null>(localStorage.getItem("path")); // Track path in state
+
   useOnClickOutside(ref, () => {
     // setStartMenuOpen((prev) => !prev);
   });
 
   useEffect(() => {
-    const path =
-      localStorage.getItem("path") === "resume"
-        ? resumeMudit
-        : localStorage.getItem("path");
-    setSearch(path || "https://google.com");
-  }, [localStorage.getItem("path")]);
+    const resolvedPath = path === "resume" ? resumeMudit : path;
+    setSearch(resolvedPath || "https://google.com");
 
-  const refInput: any = useRef();
-  refInput.current = document.getElementById("gsc-i-id1");
+    // Dynamically load the Google Custom Search Engine script
+    const script = document.createElement("script");
+    script.src = "https://cse.google.com/cse.js?cx=YOUR_CSE_ID";
+    script.async = true;
+    script.onload = () => {
+      // Initialize the search box after the script is loaded
+      if (window.google && window.google.search) {
+        window.google?.search?.cse?.element?.render({
+          div: "gcse-search",
+          tag: "search",
+        });
+        setIsSearchInitialized(true); // Mark as initialized
+      }
+    };
+    document.body.appendChild(script);
+
+    return () => {
+      // Cleanup the script when the component unmounts
+      document.body.removeChild(script);
+    };
+  }, [path]); // Depend on `path` state instead of `localStorage.getItem("path")`
+
+  useEffect(() => {
+    const resolvedPath = path === "resume" ? resumeMudit : path;
+    setSearch(resolvedPath || "https://google.com");
+
+    // Initialize the search box immediately if the script is already loaded
+    if (window.google && window.google.search) {
+      window.google?.search?.cse?.element?.render({
+        div: "gcse-search",
+        tag: "search",
+      });
+      setIsSearchInitialized(true); // Mark as initialized
+    }
+  }, [path]); // Depend on `path` state
+
+  const refInput = useRef<HTMLInputElement | null>(null);
+  refInput.current = document.getElementById(
+    "gsc-i-id1"
+  ) as HTMLInputElement | null;
   if (refInput.current) {
     refInput.current.placeholder = "Search Google or type a URL";
   }
@@ -54,9 +106,7 @@ const ChromePage = () => {
       <div className="top-bar">
         <div className="tabs">
           <div className="tab active">
-            {localStorage.getItem("path") === "resume"
-              ? "Resume Mudit Rajput"
-              : "New Tab"}
+            {path === "resume" ? "Resume Mudit Rajput" : "New Tab"}
           </div>
         </div>
         <div className="controls">
@@ -70,8 +120,8 @@ const ChromePage = () => {
             onClick={() => {
               navigate("/");
               localStorage.removeItem("path");
+              setPath(null); // Update state when path is cleared
             }}
-            className="control-btn"
           >
             <IoCloseSharp />
           </button>
@@ -79,22 +129,22 @@ const ChromePage = () => {
       </div>
       <div
         style={{
-          display: localStorage.getItem("path") !== "resume" ? "flex" : "none",
+          display: path !== "resume" ? "flex" : "none",
         }}
         className="search-container"
       >
         <IoMdArrowRoundBack color="#6f6f6f" />
-        <IoMdArrowForward color="#6f6f6f" />  
+        <IoMdArrowForward color="#6f6f6f" />
         <IoReloadOutline
           cursor="pointer"
           onClick={() => {
             window.location.reload();
           }}
         />
-        <div className="gcse-search"></div>
+        <div className="gcse-search" id="gcse-search"></div>
       </div>
       <div>
-        {localStorage.getItem("path") === "resume" ? (
+        {path === "resume" ? (
           <iframe
             frameBorder="0"
             src={search}

@@ -12,7 +12,11 @@ import { StartwithMenu } from "../Desktop";
 
 const Theme = () => {
   const navigate = useNavigate();
-  const { config, setConfig } = useContext(configContext);
+  const context = useContext(configContext);
+  if (!context) {
+    throw new Error("configContext is null. Ensure the provider is set up correctly.");
+  }
+  const { config, setConfig } = context;
   const AppContainer = styled.div`
     width: 100vw;
     height: 100vh;
@@ -77,7 +81,7 @@ const Theme = () => {
               />
             </FlexBox>
             <FlexBox display="flex" flexWrap="wrap" gap="10px">
-              {wallpapers.map((image: any) => (
+              {wallpapers.map((image: string) => (
                 <img
                   onClick={() => {
                     setConfig({
@@ -96,7 +100,7 @@ const Theme = () => {
           <br />
           <Text margin="10px 0px">Select Theme Color</Text>
           <FlexBox display="flex" flexWrap="wrap" gap="20px">
-            {colors.map((color: any) => (
+            {colors.map((color: string) => (
               <div
                 onClick={() => {
                   setConfig({
