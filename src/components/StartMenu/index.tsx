@@ -19,7 +19,8 @@ const StartMenuContainer = styled.div`
   left: 50%;
   border-radius: 10px;
   transform: translateX(-50%);
-  width: 600px;
+  max-width: 600px;
+  width: 100%;
   height: 82vh;
   background: #1e1e1eed;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);

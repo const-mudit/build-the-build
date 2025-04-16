@@ -28,11 +28,11 @@ const DesktopPage = () => {
   const { config } = useContext(configContext);
 
   const AppContainer = styled.div`
-    width: 100vw;
     height: 100vh;
     background: url(${config.wall});
     overflow: hidden;
     background-size: cover;
+    box-sizing: border-box;
   `;
 
   return (

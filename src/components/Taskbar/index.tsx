@@ -41,7 +41,9 @@ const FlexBoxColumn: any = styled.div`
 const FlexBoxRight: any = styled.div`
   display: flex;
   justify-content: right;
+  position: relative;
   width: ${(props: any) => props.width};
+  z-index: ${(props: any) => props.zIndex};
 `;
 
 const Taskbar = ({ setStartMenuOpen }: any) => {
@@ -49,7 +51,7 @@ const Taskbar = ({ setStartMenuOpen }: any) => {
   return (
     <>
       <TaskbarContainer>
-        <FlexBoxRight width="53%">
+        <FlexBoxRight width="53%" zIndex="1">
           <StartButton onClick={() => setStartMenuOpen(true)}>
             <TaskBarIcons src={windowsicon} />
           </StartButton>
