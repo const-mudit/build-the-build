@@ -1,6 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-
-// Extend the Window interface to include the google property
 declare global {
   interface Window {
     google?: {
@@ -16,7 +14,6 @@ declare global {
 }
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { useOnClickOutside } from "../../components/Hooks/useClickOutside";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { IoMdArrowForward } from "react-icons/io";
 import { IoCloseSharp, IoReloadOutline } from "react-icons/io5";
@@ -43,41 +40,10 @@ const CenterContainer = styled.div`
 `;
 
 const ChromePage = () => {
-  const ref = useRef<HTMLDivElement | null>(null);
   const navigate = useNavigate();
   const [search, setSearch] = useState<string>("https://google.com");
-  const [isSearchInitialized, setIsSearchInitialized] = useState(false);
+  const [, setIsSearchInitialized] = useState(false);
   const [path, setPath] = useState<string | null>(localStorage.getItem("path")); // Track path in state
-
-  useOnClickOutside(ref, () => {
-    // setStartMenuOpen((prev) => !prev);
-  });
-
-  useEffect(() => {
-    const resolvedPath = path === "resume" ? resumeMudit : path;
-    setSearch(resolvedPath || "https://google.com");
-
-    // Dynamically load the Google Custom Search Engine script
-    const script = document.createElement("script");
-    script.src = "https://cse.google.com/cse.js?cx=YOUR_CSE_ID";
-    script.async = true;
-    script.onload = () => {
-      // Initialize the search box after the script is loaded
-      if (window.google && window.google.search) {
-        window.google?.search?.cse?.element?.render({
-          div: "gcse-search",
-          tag: "search",
-        });
-        setIsSearchInitialized(true); // Mark as initialized
-      }
-    };
-    document.body.appendChild(script);
-
-    return () => {
-      // Cleanup the script when the component unmounts
-      document.body.removeChild(script);
-    };
-  }, [path]); // Depend on `path` state instead of `localStorage.getItem("path")`
 
   useEffect(() => {
     const resolvedPath = path === "resume" ? resumeMudit : path;
